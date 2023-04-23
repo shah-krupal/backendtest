@@ -2,7 +2,7 @@
 
 const express = require('express');
 const mongoose = require('mongoose');
-
+const cors = require('cors');
 const User = require('./models/employee.model');
 
 const usersRoute = require('./routes/index.js');
@@ -104,6 +104,23 @@ mongoose
 
 // -------------------------------------------------------------
 
+
+const corsOptions = {
+    origin:function(origin, callback){
+      if(allowedOrigins.indexOf(origin) !== -1 || !origin){
+        callback(null, true);
+    }
+    else{
+        callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  allowedHeaders: "Content-Type,Authorization",
+  preflightContinue: false,
+  OptionsSuccessStatus: 204,
+};
+
+app.use(cors(corsOptions));
 app.use('/', usersRoute);
 app.use('/', login);
 app.use('/employee', employee);
