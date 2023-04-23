@@ -26,7 +26,7 @@ cron.schedule('0 0 1 * * *', function(){   // A trigger to execute at 00:01 ever
     AttendanceController() ;
 });
 
-AttendanceController() ;
+
 
 
 // const def_attendance = async()=>{

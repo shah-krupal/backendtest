@@ -122,6 +122,7 @@ router.get('/attendance/:id',async (req,res)=>{                              // 
 
 
         const presentdays = totaldays - absentdays ;
+        console.log(presentdays, absentdays, totaldays)
         res.send({"present":presentdays, "absent":absentdays, "total":totaldays}) ;
     } catch(err){
         res.json(err);
