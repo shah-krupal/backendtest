@@ -6,7 +6,6 @@ const Manager = require('../models/manager.model')
 
 router.post('/employeelogin', async (req, res) => {
     let user;
-    console.log('1') ;
     try {
         const {UserName,Password}=req.body;
         try{
@@ -15,7 +14,6 @@ router.post('/employeelogin', async (req, res) => {
         catch(err){
             console.log(err);
         }
-        console.log('2') ;
         if(!user){
             throw new Error("User does not exist");
         }
@@ -28,7 +26,6 @@ router.post('/employeelogin', async (req, res) => {
         }
 
         // creating token
-        console.log('3') ;
         let tokenData={
             id:user.EmployeeID,
             username:user.UserName,
@@ -36,7 +33,6 @@ router.post('/employeelogin', async (req, res) => {
         };
 
         const token=await jwt.sign(tokenData,"secret",{expiresIn:"1h"});
-        console.log('4') ;
 
         res.status(200).json({
             status:true,
@@ -51,33 +47,32 @@ router.post('/employeelogin', async (req, res) => {
     }
 });
 
-
 router.post('/managerlogin', async (req, res) => {
     let user;
     try {
-        const {UserName,password}=req.body;
+        const {UserName,Password}=req.body;
         try{
-            user= await Manager.findOne({UserName:UserName});
+            user = await Manager.findOne({UserName:UserName});
         }
         catch(err){
             console.log(err);
         }
-        
         if(!user){
             throw new Error("User does not exist");
         }
 
-        const isPasswordCorrect= (user.password == password) ;
+        const isPasswordCorrect = user.comparePassword(Password) ;
 
         if(isPasswordCorrect==false){
+            console.log('Password is not correct')
             throw new Error("Password is not correct");
         }
 
         // creating token
         let tokenData={
-            _id:user.EmployeeID,
-            UserName:user.UserName,
-            position: 0 // 0 for employee
+            id:user.ManagerID,
+            username:user.UserName,
+            position: "1" // 1 for manager
         };
 
         const token=await jwt.sign(tokenData,"secret",{expiresIn:"1h"});
@@ -94,5 +89,6 @@ router.post('/managerlogin', async (req, res) => {
         next(error);
     }
 });
+
 
 module.exports = router;

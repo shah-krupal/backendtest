@@ -1,4 +1,5 @@
 const mongoose = require('mongoose') ;
+const bcrypt = require('bcrypt');
 
 var ManagerDetails = new mongoose.Schema(
     {
@@ -15,6 +16,12 @@ var ManagerDetails = new mongoose.Schema(
             type: String,
             required: true,
             unique: true
+        },
+        Password:{
+            type: String
+        },
+        Email:{
+            type: String
         },
         Gender:{
             type: String
@@ -41,6 +48,31 @@ var ManagerDetails = new mongoose.Schema(
 
     }
 )
+
+
+
+ManagerDetails.pre('save',async function() {
+    try {
+        // const salt= await(bcrypt.genSalt(10));
+        const salt = 10 ;
+        const hashPass=await bcrypt.hash(this.Password,salt);
+        this.Password=hashPass; 
+        
+    } catch (error) {
+        throw error;
+    }
+});
+
+ManagerDetails.methods.comparePassword=async function (candidatePassword) {
+    try {
+        const isMatch=await bcrypt.compare(candidatePassword,this.Password);
+        return isMatch;
+    } catch (error) {
+        console.log('er')
+        throw error
+    }
+};
+
 
 module.exports = mongoose.model('Manager', ManagerDetails)
 

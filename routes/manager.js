@@ -3,6 +3,7 @@ const router = express.Router();
 const Manager = require('../models/manager.model')
 const Employee = require('../models/employee.model')
 const Stat = require('../models/stats.model')
+const bcrypt = require('bcrypt');
 
 router.post('/', async (req,res)=>{                                   // Create New manager
     try{
@@ -39,7 +40,7 @@ router.get('/:id', async(req, res)=>{                                    // mana
     }
 });
 
-router.get('/employeeUnderManager/:id', async(req, res)=>{   
+router.get('/employeemanager/:id', async(req, res)=>{   
     try{
         const ans = await Employee.find({Manager:req.params.id});    // Get the employees list under a particular manager
         res.json(ans);

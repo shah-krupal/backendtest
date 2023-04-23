@@ -5,19 +5,11 @@ const Employee = require('../models/employee.model')
 const Stat = require('../models/stats.model')
 const passport = require('passport')
 const dateonly = require('mongoose-dateonly')
-const cron = require('node-cron')
 
-async function AttendanceController(){
-    await Employee.updateMany({},{$push:{"AbsentDates":new Date()}})     // date is added to absent array
-}
 
-cron.schedule('0 1 0 * * *', function(){   // A trigger to execute at 00:01 everyday. 
-    AttendanceController() ;
-});
 
-AttendanceController();
 
-router.get('/', async function(req, res){            // List of all Employee Profiles
+router.get('/allemployee', async function(req, res){            // List of all Employee Profiles
     try{
         const employee = await Employee.find({});
         console.log("hey  ")
@@ -28,7 +20,7 @@ router.get('/', async function(req, res){            // List of all Employee Pro
     }
 });
 
-router.post('/create', async (req,res)=>{                 // Create New employee
+router.post('/', async (req,res)=>{                 // Create New employee
     try{
 
         const data = req.body;
@@ -78,7 +70,7 @@ router.post('/create', async (req,res)=>{                 // Create New employee
     }
 }) ;
 
-router.patch('/profile/:id', async (req,res)=>{                            // edit employee by id
+router.patch('/:id', async (req,res)=>{                            // edit employee by id
     try{
         const result = await Employee.findOneAndUpdate({EmployeeID:req.params.id}, req.body);
         res.send(`${req.body.EmployeeName} successfully updated!!`)
@@ -87,7 +79,7 @@ router.patch('/profile/:id', async (req,res)=>{                            // ed
     }
 }) ;
 
-router.get('/profile/:id', async function(req, res){                       // Read Employee Profile from ID
+router.get('/:id', async function(req, res){                       // Read Employee Profile from ID
     try{
         const query = await Employee.findOne({EmployeeID:req.params.id});
         res.json(query) ;
@@ -121,6 +113,22 @@ router.get('/markattendance/:id',  async function(req, res){                    
     }
 });
 
+
+router.get('/attendance/:id',async (req,res)=>{                              // Get attendance of all employees
+    try{
+        const ans = await Employee.findOne({EmployeeID:req.params.id}) ;
+        const absentdays = ans.AbsentDates.length ;
+        totaldays = new Date().getDate() ;
+
+
+        const presentdays = totaldays - absentdays ;
+        res.send({"present":presentdays, "absent":absentdays, "total":totaldays}) ;
+    } catch(err){
+        res.json(err);
+    }
+
+
+});
 
 
 
