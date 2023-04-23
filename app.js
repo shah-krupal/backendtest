@@ -104,7 +104,7 @@ mongoose
 
 // -------------------------------------------------------------
 
-
+const allowedOrigins=['https://nicher-c9290.web.app']
 const corsOptions = {
     origin:function(origin, callback){
       if(allowedOrigins.indexOf(origin) !== -1 || !origin){
