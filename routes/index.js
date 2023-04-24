@@ -4,6 +4,7 @@ const Department = require('../models/departments.model')
 const Stat = require('../models/stats.model')
 const cron = require('node-cron')
 const Employee = require('../models/employee.model')
+const Manager = require('../models/manager.model')
 
 
 // Initialization
@@ -17,12 +18,15 @@ StatInitialize();
 // Attendance Controller
 
 async function AttendanceController(){
-    const ans = await Employee.updateMany({},{$push:{"AbsentDates":new Date()}},{new:true})     // date is added to absent array
+    await Employee.updateMany({},{$push:{"AbsentDates":new Date()}},{new:true})     // date is added to absent array
+    await Manager.updateMany({},{$push:{"AbsentDates":new Date()}}, {new:true})     // absent array is emptied
 }
 
 cron.schedule('0 0 1 * * *', function(){   // A trigger to execute at 00:01 everyday. 
     AttendanceController() ;
 });
+
+
 
 
 // const def_attendance = async()=>{
