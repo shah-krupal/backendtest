@@ -9,6 +9,10 @@ var statSchema = new mongoose.Schema(
         NoOfManager:{
             type: Number,
             default: 0
+        },
+        NoOfApplication:{
+            type: Number,
+            default: 0
         }
         // Attendance: {
         //     type: [{

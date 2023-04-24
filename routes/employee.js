@@ -117,7 +117,10 @@ router.get('/markattendance/:id',  async function(req, res){                    
 router.get('/attendance/:id',async (req,res)=>{                              // Get attendance of all employees
     try{
         const ans = await Employee.findOne({EmployeeID:req.params.id}) ;
-        const absentdays = ans.AbsentDates.length ;
+        if(ans.AbsentDates.length > 0)
+            absentdays = ans.AbsentDates.length ;
+        else
+            absentdays = 0 ;
         totaldays = new Date().getDate() ;
 
 
