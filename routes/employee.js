@@ -5,7 +5,7 @@ const Employee = require('../models/employee.model')
 const Stat = require('../models/stats.model')
 const passport = require('passport')
 const dateonly = require('mongoose-dateonly')
-
+const Manager = require('../models/manager.model')
 
 
 
@@ -80,7 +80,10 @@ router.patch('/:id', async (req,res)=>{                            // edit emplo
 
 router.get('/:id', async function(req, res){                       // Read Employee Profile from ID
     try{
-        const query = await Employee.findOne({EmployeeID:req.params.id});
+        const query = await Employee.findOne({EmployeeID:req.params.id}).lean();
+        const ans = await Manager.findOne({ManagerID:query.Manager});
+        query.ManagerName = ans.ManagerName ;
+        // console.log(query)
         res.json(query) ;
     }
     catch(err){
