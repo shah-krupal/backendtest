@@ -10,7 +10,7 @@ const employee = require('./routes/employee')
 const leaveApplication = require('./routes/leaveApplication')
 const manager = require('./routes/manager');
 const login = require('./routes/login');
-
+const admin = require('./routes/admin');
 const session = require('express-session');
 
 const passport = require('passport');
@@ -104,30 +104,36 @@ mongoose
 
 // -------------------------------------------------------------
 
-const allowedOrigins=['*']
-const corsOptions = {
-    origin:function(origin, callback){
-      if(allowedOrigins.indexOf(origin) !== -1 || !origin){
-        callback(null, true);
-    }
-    else{
-        callback(new Error('Not allowed by CORS'));
-    }
-  },
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  allowedHeaders: "Content-Type,Authorization,Origin,X-Requested-With,Accept",
-  preflightContinue: false,
-  OptionsSuccessStatus: 204,
-  Credentials: true 
-};
-
-app.use(cors(corsOptions));
+// const allowedOrigins=['*']
+// const corsOptions = {
+//     origin:function(origin, callback){
+//       if(allowedOrigins.indexOf(origin) !== -1 || !origin){
+//         callback(null, true);
+//     }
+//     else{
+//         callback(new Error('Not allowed by CORS'));
+//     }
+//   },
+//   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+//   allowedHeaders: "Content-Type,Authorization,Origin,X-Requested-With,Accept",
+//   preflightContinue: false,
+//   OptionsSuccessStatus: 204,
+//   Credentials: true 
+// };
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Authorization,Origin,X-Requested-With,Accept');
+  next();
+});
+// app.use(cors(corsOptions));
 app.use('/', usersRoute);
 app.use('/', login);
 app.use('/employee', employee);
 app.use('/leave', leaveApplication);
 app.use('/manager', manager);
 app.use('/login', login);
+app.use('/admin',admin);
 
 module.exports = app;
 

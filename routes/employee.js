@@ -12,7 +12,6 @@ const dateonly = require('mongoose-dateonly')
 router.get('/allemployee', async function(req, res){            // List of all Employee Profiles
     try{
         const employee = await Employee.find({});
-        console.log("hey  ")
         res.send(employee) ;
     }
     catch(err){
