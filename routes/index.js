@@ -17,16 +17,12 @@ StatInitialize();
 // Attendance Controller
 
 async function AttendanceController(){
-    // console.log("attentive")
     const ans = await Employee.updateMany({},{$push:{"AbsentDates":new Date()}},{new:true})     // date is added to absent array
-    // console.log(ans.AbsentDates)
 }
 
 cron.schedule('0 0 1 * * *', function(){   // A trigger to execute at 00:01 everyday. 
     AttendanceController() ;
 });
-
-
 
 
 // const def_attendance = async()=>{

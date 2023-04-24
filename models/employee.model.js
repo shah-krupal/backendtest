@@ -87,11 +87,7 @@ EmployeeDetails.pre('save',async function() {
 
 EmployeeDetails.methods.comparePassword=async function (candidatePassword) {
     try {
-        console.log('11') ;
-        console.log(this.Password)
-        console.log(candidatePassword)
         const isMatch=await bcrypt.compare(candidatePassword,this.Password);
-        console.log('22' + isMatch) ;
         return isMatch;
     } catch (error) {
         console.log('er')

@@ -7,7 +7,6 @@ const Stat = require('../models/stats.model')
 router.post('/', async(req, res)=>{     // create New Leave application
     try{
         const newleave = new LeaveApplication(req.body)
-        console.log(newleave)
         const ans = await Employee.findOne({EmployeeID:newleave.ApplicantEmployeeID})
         newleave.ResponsibleManagerID = ans.Manager
         var query =  await Stat.findOneAndUpdate({},       // to increment no. of employees which will define application ID
@@ -25,20 +24,15 @@ router.post('/:id/:type', async(req, res)=>{     // Approve Leave application
     try{
         // here var name is temp, boolval will be later changed to actual name
         // type will be 1 for approval and 0 for rejection
-        console.log(req.params.id);
-        console.log(req.params.type)
         if(req.params.type) {
-            console.log(1)
             try{
                 const lapplication = await LeaveApplication.findOneAndUpdate({ApplicationNumber: req.params.id}, {ApplicationStatus: "Approved"});
             }catch(err){
                 res.json(err)
             }
         } else {
-            console.log(2)
             const lapplication = LeaveApplication.findOneAndUpdate({ApplicationNumber: req.params.id}, {ApplicationStatus: "Rejected"});
         }
-        
         res.sendStatus(200);
     }catch(err){
         res.json(err)

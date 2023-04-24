@@ -60,8 +60,6 @@ router.post('/', async (req,res)=>{                 // Create New employee
             {$inc:{NumberOfEmployee:1}},
             {new:true}
         );
-        
-        console.log(newEmployee);
 
         res.send(`${newEmployee.EmployeeName} successfully created!!`)
     }catch(err){
@@ -83,7 +81,6 @@ router.get('/:id', async function(req, res){                       // Read Emplo
         const query = await Employee.findOne({EmployeeID:req.params.id}).lean();
         const ans = await Manager.findOne({ManagerID:query.Manager});
         query.ManagerName = ans.ManagerName ;
-        // console.log(query)
         res.json(query) ;
     }
     catch(err){
@@ -124,8 +121,6 @@ router.get('/attendance/:id',async (req,res)=>{                              // 
         else
             absentdays = 0 ;
         totaldays = new Date().getDate() ;
-
-
         const presentdays = totaldays - absentdays ;
         console.log(presentdays, absentdays, totaldays)
         res.send({"present":presentdays, "absent":absentdays, "total":totaldays}) ;
