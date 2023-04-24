@@ -91,4 +91,41 @@ router.post('/managerlogin', async (req, res) => {
 });
 
 
+router.post('/adminlogin', async (req, res) => {
+    let user;
+    try {
+        const {UserName,Password}=req.body;
+        
+
+        const isPasswordCorrect = "admin" === Password ;
+        const isUserCorrect = "admin" === UserName ;
+
+        if(isPasswordCorrect==false || isUserCorrect==false){
+            console.log('Password is not correct')
+            throw new Error("Password is not correct");
+        }
+
+        // creating token
+        let tokenData={
+            id:0,
+            username:admin,
+            position: "2" // 0 for admin
+        };
+
+        const token=await jwt.sign(tokenData,"secret",{expiresIn:"1h"});
+
+        res.status(200).json({
+            status:true,
+            success:"SendData",
+            token:token,
+        })
+
+
+    } catch (error) {
+        console.log(error);
+        next(error);
+    }
+});
+
+
 module.exports = router;

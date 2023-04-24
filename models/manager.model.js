@@ -44,7 +44,10 @@ var ManagerDetails = new mongoose.Schema(
         Salary:{
             type: Number,
             required: true
-        }
+        },
+        AbsentDates : [{
+            type: Date
+        }]
 
     }
 )
