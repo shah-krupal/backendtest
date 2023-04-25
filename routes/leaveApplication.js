@@ -76,7 +76,7 @@ router.get('/:id', async function(req, res){   // All leave appllication of a pa
 });
 
 
-router.get('/employeedata/:id', async function(req, res){   // All leave appllication of a particular employee
+router.get('/employeeleave/:id', async function(req, res){   // All leave appllication of a particular employee
     try{
         const ans = await Employee.findOne({EmployeeID:req.params.id})
         const query = await LeaveApplication.find({ResponsibleManagerID:ans.Manager});
