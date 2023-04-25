@@ -27,7 +27,7 @@ router.post('/:id/:type', async(req, res)=>{     // Approve Leave application
         // here var name is temp, boolval will be later changed to actual name
         // type will be 1 for approval and 0 for rejection
         
-        if(req.params.type) {
+        if(req.params.type == 1) {
             try{
                 lapplication = await LeaveApplication.findOneAndUpdate({ApplicationNumber: req.params.id}, {ApplicationStatus: "Approved"}, {new:true});
             }catch(err){
