@@ -121,10 +121,18 @@ router.get('/attendance/:id',async (req,res)=>{                              // 
     try{
         const ans = await Employee.findOne({EmployeeID:req.params.id}) ;
         if(ans.AbsentDates.length > 0)
-            absentdays = ans.AbsentDates.length ;
+        absentdays = ans.AbsentDates.length ;
         else
-            absentdays = 0 ;
-        totaldays = new Date().getDate() ;
+        absentdays = 0 ;
+        totaldays = 0 ;
+        if(ans.DateOfJoining.getMonth() == new Date().getMonth() && ans.DateOfJoining.getYear() == new Date().getYear())
+        {
+            totaldays = new Date().getDate() - ans.DateOfJoining.getDate() + 1;
+        }
+        else
+        {
+            totaldays = new Date().getDate() ;
+        }
         const presentdays = totaldays - absentdays ;
         res.status(200).send({"present":presentdays, "absent":absentdays, "total":totaldays}) ;
     } catch(err){
