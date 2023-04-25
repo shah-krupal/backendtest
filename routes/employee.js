@@ -12,7 +12,7 @@ const Manager = require('../models/manager.model')
 router.get('/allemployee', async function(req, res){            // List of all Employee Profiles
     try{
         const employee = await Employee.find({});
-        res.send(employee) ;
+        res.status(200).send(employee) ;
     }
     catch(err){
         res.json(err)
@@ -50,9 +50,9 @@ router.post('/', async (req,res)=>{                 // Create New employee
 
         // const employee = await new Employee(clone);
         // const newEmployee = await Employee.register(employee, data.password);
+        
         const newEmployee = new Employee(data);
         await newEmployee.save();
-
 
         // to increment no. of employees in that department
         const managerdata = await Manager.findOne({ManagerID:data.Manager});
@@ -61,7 +61,7 @@ router.post('/', async (req,res)=>{                 // Create New employee
             {new:true}
         );
 
-        res.send(`${newEmployee.EmployeeName} successfully created!!`)
+        res.status(200).json({"success":"true"}) ;
     }catch(err){
         res.status(500).send(err.message)
     }
@@ -70,7 +70,7 @@ router.post('/', async (req,res)=>{                 // Create New employee
 router.patch('/:id', async (req,res)=>{                            // edit employee by id
     try{
         const result = await Employee.findOneAndUpdate({EmployeeID:req.params.id}, req.body);
-        res.send(`${req.body.EmployeeName} successfully updated!!`)
+        res.status(200).send({"success":"true"});
     }catch(err){
         res.status(500).send(err.message)
     }
@@ -81,10 +81,10 @@ router.get('/:id', async function(req, res){                       // Read Emplo
         const query = await Employee.findOne({EmployeeID:req.params.id}).lean();
         const ans = await Manager.findOne({ManagerID:query.Manager});
         query.ManagerName = ans.ManagerName ;
-        res.json(query) ;
+        res.status(200).json(query) ;
     }
     catch(err){
-        res.json(err)
+        res.status(500).json(err)
     }
 });
 
@@ -99,16 +99,16 @@ router.get('/markattendance/:id',  async function(req, res){                    
         if(dateToday.getDate() == ans.AbsentDates[0].getDate())
         {
             await Employee.updateOne({EmployeeID: req.params.id},{$pop:{"AbsentDates":1}})   // remove last date from absent array
-            res.send("Attendance marked successfully")
+            res.status(200).send({"success":"Attendance marked successfully"})
         }
         else
         {
-            res.send("Already marked attendance for today")
+            res.status(200).send({"error":"Already marked attendance for today"})
         }
 
     }
     catch(err){
-        res.json(err)
+        res.status(500).json(err)
     }
 });
 
@@ -122,10 +122,9 @@ router.get('/attendance/:id',async (req,res)=>{                              // 
             absentdays = 0 ;
         totaldays = new Date().getDate() ;
         const presentdays = totaldays - absentdays ;
-        console.log(presentdays, absentdays, totaldays)
-        res.send({"present":presentdays, "absent":absentdays, "total":totaldays}) ;
+        res.status(200).send({"present":presentdays, "absent":absentdays, "total":totaldays}) ;
     } catch(err){
-        res.json(err);
+        res.status(500).json(err);
     }
 
 
