@@ -10,11 +10,10 @@ router.post('/', async (req,res)=>{                                   // Create 
     try{
         const newmanager = new Manager(req.body)
         // to increment no. of manager which will define manager ID
-        var query =  await Stat.findOneAndUpdate({},
-            {$inc:{NoOfManager:1}},
-            {new:true});
+        var tmp =  await Stat.findOne({'_id':'64451e19f213a2b7c257d225'});
+        var query = await Stat.findOneAndUpdate({'_id':'64451e19f213a2b7c257d225'},{NoOfManager:tmp.NoOfManager+1});
         newmanager.ManagerID = query.NoOfManager;
-        const dept = await Department.findOne({DepartmentID:newmanager.DepartmentID});
+        const dept = await Department.findOne({DepartmentID:newmanager.Department});
         newmanager.DepartmentName = dept.DepartmentName;
         const result = await Manager.create(newmanager);
         res.status(200).json({"success":"true"}) ;

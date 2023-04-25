@@ -41,6 +41,9 @@ var ManagerDetails = new mongoose.Schema(
             ref: 'Department',     // Reference to departments table.
             field:'DepartmentID'
         },
+        DepartmentName:{
+            type: String,
+        },
         Project:{
             type: String
         },
