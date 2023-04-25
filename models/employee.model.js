@@ -45,9 +45,15 @@ var EmployeeDetails = new mongoose.Schema(
             ref: 'Department',     // Reference to departments table.
             field:'DepartmentID'
         },
+        DepartmentName:{
+            type: String,
+        },
         Post:{
             type: String,
             required: true
+        },
+        Project:{
+            type: String
         },
         Salary:{
             type: Number,
