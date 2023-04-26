@@ -19,7 +19,7 @@ router.post('/employeelogin', async (req, res) => {
             throw new Error("User does not exist");
         }
 
-        const isPasswordCorrect = user.comparePassword(Password) ;
+        const isPasswordCorrect = await user.comparePassword(Password) ;
 
         if(isPasswordCorrect==false){
             throw new Error("Password is not correct");
@@ -62,7 +62,7 @@ router.post('/managerlogin', async (req, res) => {
             throw new Error("User does not exist");
         }
 
-        const isPasswordCorrect = user.comparePassword(Password) ;
+        const isPasswordCorrect = await user.comparePassword(Password) ;
 
         if(isPasswordCorrect==false){
             throw new Error("Password is not correct");
