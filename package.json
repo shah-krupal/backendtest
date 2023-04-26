@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha tests/* --timeout 10000"
+    "test": "mocha tests/* --timeout 10000",
+    "start": "nodemon index.js"
   },
   "author": "",
   "license": "ISC",
@@ -24,7 +25,6 @@
     "mongoose": "^7.0.4",
     "mongoose-dateonly": "^1.0.6",
     "node-cron": "^3.0.2",
-    "nodemon": "^2.0.22",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^8.0.0",
@@ -32,6 +32,7 @@
   },
   "devDependencies": {
     "jest": "^29.5.0",
+    "nodemon": "^2.0.22",
     "supertest": "^6.3.3"
   }
 }
