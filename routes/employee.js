@@ -59,10 +59,12 @@ router.post('/', async (req,res)=>{                 // Create New employee
             {new:true}
             );
             
+            data.DepartmentName = dept.DepartmentName;
             data.Project = managerdata.Project;
-            data.DepartmantName = dept.DepartmentName;
+
             const newEmployee = new Employee(data);
             await newEmployee.save();
+            console.log(newEmployee)
 
         res.status(200).json({"success":"true"}) ;
     }catch(err){
@@ -84,6 +86,8 @@ router.get('/:id', async function(req, res){                       // Read Emplo
         const query = await Employee.findOne({EmployeeID:req.params.id}).lean();
         const ans = await Manager.findOne({ManagerID:query.Manager});
         query.ManagerName = ans.ManagerName ;
+        noOfDays = 0 ;
+        noOfDays = new Date().getDate() - query.AbsentDates.length ;
         query.SalaryToCredit = query.Salary/22*(22-query.AbsentDates.length) ;
         res.status(200).json(query) ;
     }
