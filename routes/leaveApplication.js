@@ -8,8 +8,9 @@ const Manager = require('../models/manager.model')
 router.post('/', async(req, res)=>{     // create New Leave application
     try{
         const newleave = new LeaveApplication(req.body)
-        const ans = await Employee.findOne({EmployeeID:newleave.ApplicantEmployeeID})
+        const ans = await Employee.findOne({EmployeeID:newleave.ApplicantEmployeeID}).lean()
         if(!ans) return res.status(500).send({"error":"Employee does not exist"});
+        newleave.ApplicantName = ans.EmployeeName;
         newleave.ResponsibleManagerID = ans.Manager
         var query =  await Stat.findOneAndUpdate({},       // to increment no. of employees which will define application ID
         {$inc:{NoOfApplication:1}},

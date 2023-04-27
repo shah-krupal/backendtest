@@ -15,6 +15,9 @@ var leaveApplicationSchema = new mongoose.Schema(
             field:'EmployeeID',
             required: true
         },
+        ApplicantName:{
+            type: String
+        },
         ApplicationType:{
             type: String,
             allowedValues: ['Medical', 'WFH', 'Parental', 'Others'],
