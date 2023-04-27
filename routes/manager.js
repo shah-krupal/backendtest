@@ -15,6 +15,7 @@ router.post('/', async (req,res)=>{                                   // Create 
         newmanager.ManagerID = query.NoOfManager;
         const dept = await Department.findOne({DepartmentID:newmanager.Department});
         newmanager.DepartmentName = dept.DepartmentName;
+        newmanager.DateOfJoining = Date.now();
         const result = await Manager.create(newmanager);
         res.status(200).json({"success":"true"}) ;
     }catch(err){
