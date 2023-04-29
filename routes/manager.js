@@ -36,6 +36,7 @@ router.get('/:id', async(req, res)=>{                                    // mana
     try{
         const ans = await Manager.findOne({ManagerID:req.params.id}).lean();    // Get the manager document with given managerID
         ans.SalaryToCredit = ans.Salary/22*(22-ans.AbsentDates.length) ;
+        ans.SalaryToCredit = ans.SalaryToCredit.toFixed(0) ;
         if(ans == null)
         res.status(500).json(ans);
         else

@@ -89,6 +89,7 @@ router.get('/:id', async function(req, res){                       // Read Emplo
         noOfDays = 0 ;
         noOfDays = new Date().getDate() - query.AbsentDates.length ;
         query.SalaryToCredit = query.Salary/22*(22-query.AbsentDates.length) ;
+        query.SalaryToCredit = query.SalaryToCredit.toFixed(0) ;
         res.status(200).json(query) ;
     }
     catch(err){
