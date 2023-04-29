@@ -45,22 +45,62 @@ describe('Testing GET attendance', ()=>{
 })
 
 
-describe('Testing POST create new employee', ()=>{
-    it('should create new employee', (done)=>{           // correct username and password
-                                                           // uncomment it for final test. commented to prevent db
+
+
+// describe('Testing POST create new employee', ()=>{
+//     it('should create new employee', (done)=>{           // correct username and password
+//                                                            // uncomment it for final test. commented to prevent db
+//         chai
+//         .request(host)
+//         .post(path)
+//         .send({
+//             "EmployeeID": 3,
+//             "EmployeeName": "Test Employee",    // need to write a unique username everytime
+//             "UserName": "user",
+//             "Password": "user",
+//             "Email": "user",
+//             "PhoneNo":"1221332",
+//             "Post":"QA",
+//             "Salary": 10000,
+//             "Manager": 1
+//         })
+//         .end((err,res)=>{
+//             res.should.have.status(200);
+//             res.body.should.be.a('object');
+//             done();
+//             });
+//     });
+//     it('should not create new employee', (done)=>{           // correct username and password
+//         chai
+//         .request(host)
+//         .post(path)
+//         .send({
+//             "EmployeeID": 3,
+//             "EmployeeName": "Test Employee",    // need to write a unique username everytime
+//             "UserName": "user",
+//             "Password": "user",
+//             "Email": "user",
+//             "PhoneNo":"1221332",
+//             "Post":"QA",
+//             "Salary": 10000,
+//             "Manager": 1
+//         })
+//         .end((err,res)=>{
+//             res.should.not.have.status(200);
+//             res.body.should.be.a('object');
+//             done();
+//             });
+//     });
+// })
+
+
+describe('Testing PUT update employee', ()=>{
+    it('should update employee', (done)=>{           // correct username and password
         chai
         .request(host)
-        .post(path)
+        .patch(path+'/20')
         .send({
-            "EmployeeID": 3,
-            "EmployeeName": "Test Employee",    // need to write a unique username everytime
-            "UserName": "user",
-            "Password": "user",
-            "Email": "user",
-            "PhoneNo":"1221332",
-            "Post":"QA",
-            "Salary": 10000,
-            "Manager": 1
+            "Address":"Home address"
         })
         .end((err,res)=>{
             res.should.have.status(200);
@@ -68,20 +108,12 @@ describe('Testing POST create new employee', ()=>{
             done();
             });
     });
-    it('should not create new employee', (done)=>{           // correct username and password
+    it('should not update employee', (done)=>{           // correct username and password
         chai
         .request(host)
-        .post(path)
+        .put(path+'/10000')
         .send({
-            "EmployeeID": 3,
-            "EmployeeName": "Test Employee",    // need to write a unique username everytime
-            "UserName": "user",
-            "Password": "user",
-            "Email": "user",
-            "PhoneNo":"1221332",
-            "Post":"QA",
-            "Salary": 10000,
-            "Manager": 1
+            "Address":"Home address"
         })
         .end((err,res)=>{
             res.should.not.have.status(200);
@@ -89,4 +121,4 @@ describe('Testing POST create new employee', ()=>{
             done();
             });
     });
-})
+});

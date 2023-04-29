@@ -31,43 +31,43 @@ describe('Testing GET leave application', ()=>{
 })
 
 
-describe('Testing POST leave application', ()=>{
-    it('should create applications', (done)=>{           // correct id
-                                                    //comment should be removed while testing
-        chai
-        .request(host)
-        .post(path)
-        .send({
-            "ApplicationNumber":3,
-            "ApplicantEmployeeID":6,
-            "ApplicationType":"Medical",
-            "LeaveStartDate":"2020-12-12",
-            "LeaveEndDate":"2020-12-12"
-        })
-        .end((err,res)=>{
-            res.should.have.status(200);
-            res.body.should.be.a('object');
-            done();
-            });
-    });
-    it('should create applications', (done)=>{           // correct id
-        // comment should be removed while testing
-    chai
-    .request(host)
-    .post(path)
-    .send({
-        "ApplicationNumber":3,
-        "ApplicantEmployeeID":150,
-        "ApplicationType":"Medical",
-        "LeaveStartDate":"2020-12-12",
-        "LeaveEndDate":"2020-12-12"
-    })
-    .end((err,res)=>{
-        res.should.not.have.status(200);
-        res.body.should.be.a('object');
-        done();
-        });
-});
+// describe('Testing POST leave application', ()=>{
+//     it('should create applications', (done)=>{           // correct id
+//                                                     //comment should be removed while testing
+//         chai
+//         .request(host)
+//         .post(path)
+//         .send({
+//             "ApplicationNumber":3,
+//             "ApplicantEmployeeID":6,
+//             "ApplicationType":"Medical",
+//             "LeaveStartDate":"2020-12-12",
+//             "LeaveEndDate":"2020-12-12"
+//         })
+//         .end((err,res)=>{
+//             res.should.have.status(200);
+//             res.body.should.be.a('object');
+//             done();
+//             });
+//     });
+//     it('should create applications', (done)=>{           // correct id
+//         // comment should be removed while testing
+//     chai
+//     .request(host)
+//     .post(path)
+//     .send({
+//         "ApplicationNumber":3,
+//         "ApplicantEmployeeID":150,
+//         "ApplicationType":"Medical",
+//         "LeaveStartDate":"2020-12-12",
+//         "LeaveEndDate":"2020-12-12"
+//     })
+//     .end((err,res)=>{
+//         res.should.not.have.status(200);
+//         res.body.should.be.a('object');
+//         done();
+//         });
+// });
 
 describe('Testing POST approve leave application', ()=>{
     it('should approve applications', (done)=>{           // correct id
@@ -89,10 +89,10 @@ describe('Testing POST approve leave application', ()=>{
             done();
             });
     });
-})
+});
 
     
-})
+
 
 
 
